@@ -1,20 +1,50 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { Movie } from './movie.type';
+import { movies } from './data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
+  private _movies: Movie[] = movies;
 
-  constructor() { }
 
-
-  getMovies(): Observable<any> {
-    return new Observable();
+  constructor() {
   }
-  getMovieById(id: string): Observable<any> {
-    return new Observable();
+
+
+  private setWatchList(watchList: string[]) {
+    localStorage.setItem('watchList', JSON.stringify(watchList));
+
 
   }
+  getWatchList(): string[] {
+    return JSON.parse(localStorage.getItem('watchList') as string) || [];
+  }
+
+
+  getMovies(): Observable<Movie[]> {
+    const movies: Movie[] = structuredClone(this._movies);
+    return of(movies);
+  }
+  getMovieById(id: string): Observable<Movie> {
+    const movies: Movie[] = structuredClone(this._movies);
+    const movie = movies.find(m => m.id === id);
+    if (movie === undefined) {
+      throwError(() => new Error('This movie is not exist for this id '));
+    }
+    return of(movie as Movie);
+  }
+  addToWatchList(movieId: string): void {
+    let watchList: string[] = this.getWatchList()
+    const isMovieInWatchList = watchList.some(id => id === movieId);
+    if (!isMovieInWatchList) {
+      watchList.push(movieId);
+      this.setWatchList(watchList);
+    }
+  }
+
+
 
 }

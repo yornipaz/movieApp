@@ -4,8 +4,9 @@ import { MovieListComponent } from './list/list.component';
 import { MovieService } from './movie.service';
 import { inject } from '@angular/core';
 import { MovieDetailComponent } from './detail/detail.component';
+import { movieResolver } from './movie.resolver';
 
-const routes: Routes = [
+export default [
   {
     path: '',
     component: MovieComponent,
@@ -16,18 +17,18 @@ const routes: Routes = [
         pathMatch: 'full',
         component: MovieListComponent,
         resolve: {
-          courses: () => inject(MovieService).getMovies(),
+          movies: () => inject(MovieService).getMovies(),
         },
       },
       {
         path: ':id',
         component: MovieDetailComponent,
-        // resolve: {
-        //   course: courseResolver,
-        // },
+        resolve: {
+          movie: movieResolver,
+        },
       },
     ],
   },
-];
+] as Routes;
 
-export const MovieRoutes = RouterModule.forChild(routes);
+

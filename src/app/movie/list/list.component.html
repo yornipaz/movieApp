@@ -1,3 +1,98 @@
-<p>
-  list works!
-</p>
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+
+  <!-- Header -->
+  <div class="relative min-h-min flex-0 py-8 px-4 sm:p-16 overflow-hidden bg-gray-800 dark">
+
+    <!-- Rings -->
+    <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
+      preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
+        <circle r="234" cx="196" cy="23"></circle>
+        <circle r="234" cx="790" cy="491"></circle>
+      </g>
+    </svg>
+    <!-- @formatter:on -->
+    <div class="z-10 relative flex flex-col items-center">
+      <h2 class="text-xl font-semibold">GUATIC TV</h2>
+
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex flex-auto p-6 sm:p-10">
+
+    <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl   mx-auto">
+      <!-- Filters -->
+      <div class="flex flex-col sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+
+        <mat-form-field class="w-full sm:w-72 mt-4 sm:mt-0 sm:ml-4" [subscriptSizing]="'dynamic'">
+
+          <input (input)="filterByQuery(query.value)" placeholder="Search by title or description" matInput #query>
+        </mat-form-field>
+
+      </div>
+      <!-- Courses -->
+      <ng-container *ngIf="this.filteredMovies.length; else noCourses">
+        <div class="grid grid-cols-1  sm:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 sm:mt-10">
+          <ng-container *ngFor="let movie of filteredMovies; trackBy: trackByFn">
+            <div class="movie">
+              <div class="menu"><i class="material-icons"></i></div>
+              <div class="movie-img">
+                <img src="{{'./../../../'+movie.image}}" alt="{{movie.title}}">
+              </div>
+              <div class="text-movie-cont">
+                <div class="mr-grid">
+                  <div class="col1 min-h-[5.75rem] flex flex-col justify-center">
+                    <h2 class="text-start ">{{movie.title}}</h2>
+                    <ul class="movie-gen">
+                      <li>{{movie.duration}} /</li>
+                      <li>{{movie.genre}}</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="mr-grid summary-row">
+                  <div class="col2">
+                    <h5>SUMMARY</h5>
+                  </div>
+                  <div class="col2">
+                    <ul class="movie-likes">
+                      <li>{{movie.releasedDate}} </li>
+
+                    </ul>
+                  </div>
+                </div>
+                <div class="mr-grid min-h-[3.4rem]">
+                  <div class="col1">
+                    <p class="movie-description truncate">{{movie.description}} </p>
+                  </div>
+                </div>
+
+                <div class="mr-grid mt-2">
+                  <div class="col2">
+                    <a class="watch-btn">
+                      <h3 class=" text-xs"><i class="material-icons">&#xE037;</i>WATCH TRAILER</h3>
+                    </a>
+                  </div>
+                  <div class="col2 action-btn"><i class="material-icons">&#xE161;</i>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <!-- No courses -->
+      <ng-template #noCourses>
+        <div class="flex flex-auto flex-col items-center justify-center dark:bg-transparent">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+          <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">No movies found!</div>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+</div>
