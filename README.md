@@ -1,27 +1,39 @@
-# MovieApp
+# Movie App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.10.
+Este es un proyecto de aplicación web para películas creado con Angular.
 
-## Development server
+## Descripción
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+La Movie App es una aplicación web que te permite explorar una variedad de películas y gestionar tu lista de películas para ver. La aplicación incluye las siguientes características:
 
-## Code scaffolding
+- **Vista Principal de Películas:**
+  - Muestra una lista de miniaturas de películas con detalles como título y fecha de estreno.
+  - Permite ordenar las películas por título o fecha de estreno.
+  - Cada miniatura de película tiene un botón "Añadir a la lista de vigilancia".
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Detalles de la Película:**
+  - Al hacer clic en una miniatura, se lleva al usuario a una página de detalles.
+  - Muestra información detallada sobre la película, incluyendo la imagen, tráiler de YouTube y otros detalles relevantes.
+  - Incluye un botón "Añadir a la lista de vigilancia".
 
-## Build
+- **Lista de Vigilancia:**
+  - Las películas añadidas a la lista de vigilancia se guardan en el almacenamiento local del usuario.
+  - Cada miniatura de película en la vista principal muestra una etiqueta "En mi lista de vigilancia" si está en la lista del usuario.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Instalación y Ejecución
 
-## Running unit tests
+### Requisitos Previos
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Node.js y npm deben estar instalados en tu máquina.
 
-## Running end-to-end tests
+### Configuración del Proyecto
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1. Clona el repositorio:
 
-## Further help
+   ```bash
+   git clone https://github.com/tu-usuario/tu-proyecto.git
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Clona el repositorio:
+
+   ```bash
+   git clone https://github.com/yornipaz/movieApp.git
