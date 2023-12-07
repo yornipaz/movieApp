@@ -32,7 +32,7 @@ export class MovieService {
     const movies: Movie[] = structuredClone(this._movies);
     const movie = movies.find(m => m.id === id);
     if (movie === undefined) {
-      throwError(() => new Error('This movie is not exist for this id '));
+      return throwError(() => new Error('This movie is not exist for this id '));
     }
     return of(movie as Movie);
   }
