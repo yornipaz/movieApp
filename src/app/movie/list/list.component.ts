@@ -4,18 +4,18 @@ import { Movie } from '../movie.type';
 
 import { MovieService } from '../movie.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { I18nPluralPipe, NgClass, NgFor, NgIf, NgStyle, PercentPipe } from '@angular/common';
+import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { BehaviorSubject, combineLatest, Subject, takeUntil } from 'rxjs';
 
@@ -28,9 +28,9 @@ import { BehaviorSubject, combineLatest, Subject, takeUntil } from 'rxjs';
   standalone: true,
   imports: [CdkScrollable, NgStyle, MatSelectModule, MatOptionModule, NgFor, MatIconModule, MatInputModule, MatSlideToggleModule, NgIf, NgClass, MatTooltipModule, MatButtonModule, RouterLink],
 })
-export class MovieListComponent implements OnInit {
+export class MovieListComponent implements OnInit, OnDestroy {
   movies: Movie[] = [];
-  watchList: string[];
+
   categories: string[] = [];
   filteredMovies: Movie[] = [];
   filters: {
@@ -47,7 +47,7 @@ export class MovieListComponent implements OnInit {
 
 
   constructor(private _movieService: MovieService, private _route: ActivatedRoute, private _changeDetectorRef: ChangeDetectorRef,) {
-    this.watchList = this._movieService.getWatchList();
+
   }
 
   ngOnInit() {
@@ -146,7 +146,7 @@ export class MovieListComponent implements OnInit {
    * @returns boolean
    */
   isMovieInWatchList(movieId: string): boolean {
-    return this.watchList.includes(movieId);
+    return this._movieService.isMovieInWatchList(movieId);
 
   }
 }

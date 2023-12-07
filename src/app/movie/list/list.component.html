@@ -7,7 +7,7 @@
       <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
         <li class="inline-flex items-center">
           <a [routerLink]="['/movie']"
-            class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+            class="inline-flex items-center text-base font-medium text-gray-700 hover:text-red-900 hover:font-semibold dark:text-gray-400 dark:hover:text-white">
             <svg class="w-4 h-4 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
               viewBox="0 0 20 20">
               <path
@@ -85,16 +85,34 @@
                   </div>
                 </div>
 
-                <div class="mr-grid mt-2">
-                  <div class="col2">
-                    <a class="card__link" [routerLink]="['/movie',movie.id]">
-                      <h3 class=" text-xs"><i class="material-icons">&#xE037;</i>WATCH TRAILER</h3>
+                <div class="mr-grid flex mt-2">
+                  <div class="w-4/5">
+                    <a class="card__link focus:outline-none  hover:bg-red-950 hover:text-gray-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                      [routerLink]="['/movie',movie.id]">
+                      <h3 class=" text-xs hover:text-gray-200"><i class="material-icons">&#xE037;</i>WATCH TRAILER</h3>
                     </a>
                   </div>
-                  <div class="col2 n">
-                    <a class="card__link" (click)="addMovieToWatchList(movie.id)">
-                      <h3 class=" text-xs"><i class="material-icons">&#xE037;</i>Add to watch list</h3>
-                    </a>
+                  <div class="w-1/5">
+                    <button
+                      class="flex flex-col justify-end items-baseline font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
+                      (click)="addMovieToWatchList(movie.id)" [disabled]="isMovieInWatchList(movie.id)">
+
+                      <svg *ngIf="isMovieInWatchList(movie.id)"
+                        class="w-6 h-6 text-red-600  hover:text-red-700 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
+                        <path
+                          d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
+                      </svg>
+                      <svg *ngIf="!isMovieInWatchList(movie.id)"
+                        class="w-6 h-6 text-red-600  hover:text-red-700 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z" />
+                      </svg>
+
+
+                    </button>
+
                   </div>
 
 

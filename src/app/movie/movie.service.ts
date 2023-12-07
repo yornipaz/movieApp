@@ -53,6 +53,14 @@ export class MovieService {
     }
     return;
   }
+  /**
+   * Movie id is on my watch list
+   * @param movieId
+   * @returns boolean
+   */
+  isMovieInWatchList(movieId: string): boolean {
+    return this.getWatchList().some(id => id === movieId);
+  }
   getCategories(): Observable<string[]> {
     let categories: string[] = []
 
