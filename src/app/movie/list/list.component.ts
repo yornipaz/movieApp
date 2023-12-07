@@ -26,38 +26,64 @@ import { BehaviorSubject, combineLatest, Subject, takeUntil } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CdkScrollable, NgStyle, MatSelectModule, MatOptionModule, NgFor, MatIconModule, MatInputModule, MatSlideToggleModule, NgIf, NgClass, MatTooltipModule, MatProgressBarModule, MatButtonModule, RouterLink, PercentPipe, I18nPluralPipe],
+  imports: [CdkScrollable, NgStyle, MatSelectModule, MatOptionModule, NgFor, MatIconModule, MatInputModule, MatSlideToggleModule, NgIf, NgClass, MatTooltipModule, MatButtonModule, RouterLink],
 })
 export class MovieListComponent implements OnInit {
   movies: Movie[] = [];
   watchList: string[];
+  categories: string[] = [];
   filteredMovies: Movie[] = [];
   filters: {
     categorySlug$: BehaviorSubject<string>;
     query$: BehaviorSubject<string>;
-    hideCompleted$: BehaviorSubject<boolean>;
+    hideWatchList$: BehaviorSubject<boolean>;
   } = {
       categorySlug$: new BehaviorSubject('all'),
       query$: new BehaviorSubject(''),
-      hideCompleted$: new BehaviorSubject(false),
+      hideWatchList$: new BehaviorSubject(false),
     };
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
-  constructor(private _movieService: MovieService, private _changeDetectorRef: ChangeDetectorRef,) {
+  constructor(private _movieService: MovieService, private _route: ActivatedRoute, private _changeDetectorRef: ChangeDetectorRef,) {
     this.watchList = this._movieService.getWatchList();
   }
 
   ngOnInit() {
-    this._movieService.getMovies().pipe(
+    // get data of movies and categories  for the movie list from the resolver.
+
+
+    this._route.data.pipe(
       takeUntil(this._unsubscribeAll)
-    ).subscribe(movies => {
-      this.filteredMovies = movies;
-      this.movies = movies;
+    ).subscribe(data => {
+      this.filteredMovies = this.movies = data['movies'];
+      this.categories = data['categories'];
       this._changeDetectorRef.markForCheck();
 
     });
+    // Filter the movies
+    combineLatest([this.filters.categorySlug$, this.filters.query$, this.filters.hideWatchList$])
+      .subscribe(([categorySlug, query, hideWatchList]) => {
+        // Reset the filtered movies
+        this.filteredMovies = this.movies;
+
+        // Filter by category
+        if (categorySlug !== 'all') {
+          this.filteredMovies = this.filteredMovies.filter(movie => movie.genre.split(',').includes(categorySlug));
+        }
+
+        // Filter by search query
+        if (query !== '') {
+          this.filteredMovies = this.filteredMovies.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase())
+            || movie.releasedDate.toLowerCase().includes(query.toLowerCase()));
+        }
+        // Filter by  watch list
+        if (hideWatchList) {
+          this.filteredMovies = this.filteredMovies.filter(movie => this.isMovieInWatchList(movie.id));
+        }
+
+      });
 
   }
   addMovieToWatchList(movieId: string) {
@@ -87,23 +113,14 @@ export class MovieListComponent implements OnInit {
     this.filters.query$.next(query);
   }
 
-  // /**
-  //  * Filter by category
-  //  *
-  //  * @param change
-  //  */
-  // filterByCategory(change: MatSelectChange): void {
-  //   this.filters.categorySlug$.next(change.value);
-  // }
-
-  // /**
-  //  * Show/hide completed courses
-  //  *
-  //  * @param change
-  //  */
-  // toggleCompleted(change: MatSlideToggleChange): void {
-  //   this.filters.hideCompleted$.next(change.checked);
-  // }
+  /**
+   * Filter by category
+   *
+   * @param change
+   */
+  filterByCategory(change: MatSelectChange): void {
+    this.filters.categorySlug$.next(change.value);
+  }
 
   /**
    * Track by function for ngFor loops
@@ -113,5 +130,23 @@ export class MovieListComponent implements OnInit {
    */
   trackByFn(index: number, item: any): any {
     return item.id || index;
+  }
+  /**
+    * Show/hide on my watch  list movies
+    *
+    * @param change
+    */
+  toggleOnMyWatchList(event: any): void {
+    this.filters.hideWatchList$.next(event.target.checked);
+  }
+
+  /**
+   * Movie id is on my watch list
+   * @param movieId
+   * @returns boolean
+   */
+  isMovieInWatchList(movieId: string): boolean {
+    return this.watchList.includes(movieId);
+
   }
 }

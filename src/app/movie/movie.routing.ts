@@ -18,6 +18,7 @@ export default [
         component: MovieListComponent,
         resolve: {
           movies: () => inject(MovieService).getMovies(),
+          categories: () => inject(MovieService).getCategories(),
         },
       },
       {

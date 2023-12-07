@@ -1,61 +1,79 @@
-<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+<!-- Main -->
+<div class="flex flex-auto p-6 sm:p-10">
 
-  <!-- Header -->
-  <div class="relative min-h-min flex-0 py-8 px-4 sm:p-16 overflow-hidden bg-gray-800 dark">
 
-    <!-- Rings -->
-    <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
-      preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-      <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
-        <circle r="234" cx="196" cy="23"></circle>
-        <circle r="234" cx="790" cy="491"></circle>
-      </g>
-    </svg>
-    <!-- @formatter:on -->
-    <div class="z-10 relative flex flex-col items-center">
-      <h2 class="text-xl font-semibold">GUATIC TV</h2>
+  <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl   mx-auto">
+    <nav class="flex mb-6" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+        <li class="inline-flex items-center">
+          <a [routerLink]="['/movie']"
+            class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+            <svg class="w-4 h-4 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              viewBox="0 0 20 20">
+              <path
+                d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+            </svg>
+            Movie
+          </a>
+        </li>
+      </ol>
+    </nav>
 
-    </div>
-  </div>
+    <!-- Filters -->
+    <div class="flex flex-col sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
 
-  <!-- Main -->
-  <div class="flex flex-auto p-6 sm:p-10">
+      <mat-form-field class="w-full sm:w-36" [subscriptSizing]="'dynamic'">
+        <mat-select [value]="'all'" (selectionChange)="filterByCategory($event)">
+          <mat-option [value]="'all'">All</mat-option>
+          <ng-container *ngFor="let category of categories; trackBy: trackByFn">
+            <mat-option [value]="category">{{category}}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-full sm:w-80 mt-4 sm:mt-0 sm:ml-4" [subscriptSizing]="'dynamic'">
+        <mat-icon matPrefix class="icon-size-5 text-white" fontIcon="search"></mat-icon>
+        <input (input)="filterByQuery(query.value)" placeholder="Search by title or release date" matInput #query>
+      </mat-form-field>
+      <div class="mt-8 sm:mt-0 sm:ml-auto">
 
-    <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl   mx-auto">
-      <!-- Filters -->
-      <div class="flex flex-col sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
-
-        <mat-form-field class="w-full sm:w-72 mt-4 sm:mt-0 sm:ml-4" [subscriptSizing]="'dynamic'">
-
-          <input (input)="filterByQuery(query.value)" placeholder="Search by title or description" matInput #query>
-        </mat-form-field>
+        <label class="relative inline-flex items-center me-5 cursor-pointer">
+          <input type="checkbox" class="sr-only peer" (change)="toggleOnMyWatchList($event)">
+          <div
+            class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600">
+          </div>
+          <span class="ms-3 text-base  text-gray-900 dark:text-gray-300">Hide on my watch list</span>
+        </label>
 
       </div>
-      <!-- Courses -->
-      <ng-container *ngIf="this.filteredMovies.length; else noCourses">
-        <div class="grid grid-cols-1  sm:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 sm:mt-10">
+
+    </div>
+    <main>
+      <!-- movies -->
+      <ng-container *ngIf="this.filteredMovies.length; else noMovies">
+        <div class="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
           <ng-container *ngFor="let movie of filteredMovies; trackBy: trackByFn">
-            <div class="movie">
-              <div class="menu"><i class="material-icons"></i></div>
-              <div class="movie-img">
+            <div class="card">
+
+              <span *ngIf="isMovieInWatchList(movie.id)" class="card__label"></span>
+              <div class="card__img">
                 <img src="{{'./../../../'+movie.image}}" alt="{{movie.title}}">
               </div>
-              <div class="text-movie-cont">
+              <div class="card__content">
                 <div class="mr-grid">
                   <div class="col1 min-h-[5.75rem] flex flex-col justify-center">
                     <h2 class="text-start ">{{movie.title}}</h2>
-                    <ul class="movie-gen">
+                    <ul class="card__genre">
                       <li>{{movie.duration}} /</li>
                       <li>{{movie.genre}}</li>
                     </ul>
                   </div>
                 </div>
-                <div class="mr-grid summary-row">
+                <div class="mr-grid mt-3">
                   <div class="col2">
                     <h5>SUMMARY</h5>
                   </div>
                   <div class="col2">
-                    <ul class="movie-likes">
+                    <ul class="card__likes">
                       <li>{{movie.releasedDate}} </li>
 
                     </ul>
@@ -63,17 +81,20 @@
                 </div>
                 <div class="mr-grid min-h-[3.4rem]">
                   <div class="col1">
-                    <p class="movie-description truncate">{{movie.description}} </p>
+                    <p class="card__description truncate">{{movie.description}} </p>
                   </div>
                 </div>
 
                 <div class="mr-grid mt-2">
                   <div class="col2">
-                    <a class="watch-btn">
+                    <a class="card__link" [routerLink]="['/movie',movie.id]">
                       <h3 class=" text-xs"><i class="material-icons">&#xE037;</i>WATCH TRAILER</h3>
                     </a>
                   </div>
-                  <div class="col2 action-btn"><i class="material-icons">&#xE161;</i>
+                  <div class="col2 n">
+                    <a class="card__link" (click)="addMovieToWatchList(movie.id)">
+                      <h3 class=" text-xs"><i class="material-icons">&#xE037;</i>Add to watch list</h3>
+                    </a>
                   </div>
 
 
@@ -84,15 +105,14 @@
         </div>
       </ng-container>
 
-      <!-- No courses -->
-      <ng-template #noCourses>
-        <div class="flex flex-auto flex-col items-center justify-center dark:bg-transparent">
+      <!-- No movies -->
+      <ng-template #noMovies>
+        <div class="flex flex-auto flex-col items-center justify-center dark:bg-transparent mt-20">
           <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
           <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">No movies found!</div>
         </div>
       </ng-template>
-    </div>
-
+    </main>
   </div>
 
 </div>

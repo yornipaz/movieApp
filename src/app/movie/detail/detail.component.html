@@ -1,88 +1,97 @@
-<main>
-  <nav class="navbar">
-    <a href="#" class="logo">YouTube</a>
-    <div class="menu">
-      <a href="#">Featured</a> <a href="#">TV Series</a>
-      <a href="#">Movie</a> <a href="#">Variety</a>
-      <a href="#">Community</a>
-    </div>
-    <div class="burger-menu">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </nav>
-  <!-- <div class="container"> -->
-  <div class="movie-card">
-    <div class="poster-wrapper">
-      <div class="poster">
-        <img
-          src="https://m.media-amazon.com/images/M/MV5BNzQxNTIyODAxMV5BMl5BanBnXkFtZTgwNzQyMDA3OTE@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-          alt="poster" />
-        <div class="release-date">
-          <h2>30</h2>
-          <div class="divider"></div>
-          <p>NOV 2017</p>
-        </div>
-        <div class="btn-play">&#9655;</div>
-      </div>
-    </div>
-    <!-- end poster-wrapper -->
-    <div class="movie-info">
-      <div class="header-section">
-        <h2>MOONLIGHT</h2>
-        <p>Same-sex / American / English / 2016 / 1h59m</p>
-        <div class="extra">
-          <div class="ratings">
-            <p> &#9733; &#9733; &#9733; &#9733; &#9734; 8.0</p>
+<div class="flex flex-auto p-6 sm:p-10">
+
+
+  <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl    mx-auto">
+    <nav class="flex mb-12 " aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+        <li class="inline-flex items-center">
+          <a [routerLink]="['/movie']"
+            class="inline-flex items-center text-base font-medium text-gray-700 hover:text-red-900 hover:font-semibold dark:text-gray-400 dark:hover:text-white">
+            <svg class="w-4 h-4 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              viewBox="0 0 20 20">
+              <path
+                d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+            </svg>
+            Movie
+          </a>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 9 4-4-4-4" />
+            </svg>
+            <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{movie.title}}</span>
           </div>
-          <p class="channels"><span>Hulu</span><span>Youtube</span><span>BBC</span></p>
+        </li>
+      </ol>
+    </nav>
+    <main class="container">
+      <!-- <div class="container"> -->
+      <article class="movie sm:grid sm:grid-cols-2 sm:gap-3 sm:py-9">
+        <div class="movie__header">
+          <div class="movie__poster">
+            <img class="sm:min-h-[90%] " src="{{'./../../../'+movie.image}}" alt="{{movie.title}}" />
+            <div class="movie__poster--release-date top-1 left-1 sm:left-[-30px] sm:top-7">
+              <h2 class="text-4xl">{{movie.releasedDate.split(" ")[0]}}</h2>
+              <div class="divider"></div>
+              <p>{{movie.releasedDate.split(" ")[1].substring(0,3).toLocaleUpperCase()}} {{movie.releasedDate.split("
+                ")[2]}}</p>
+            </div>
+
+          </div>
         </div>
-      </div>
-      <div class="cast-section">
-        <h3>THE CAST</h3>
-        <div class="casts">
-          <img
-            src="https://m.media-amazon.com/images/M/MV5BNDg4OTczODE5Nl5BMl5BanBnXkFtZTcwMjgwMjA0Mg@@._V1_UY44_CR3,0,32,44_AL_.jpg"
-            alt="avatar" />
-          <img
-            src="https://m.media-amazon.com/images/M/MV5BOTkyNDE4NTA4NF5BMl5BanBnXkFtZTgwOTY3ODQ1MDI@._V1_UY44_CR3,0,32,44_AL_.jpg"
-            alt="avatar" />
-          <img
-            src="https://m.media-amazon.com/images/M/MV5BNzYwMTQ1ODY1MV5BMl5BanBnXkFtZTgwMTU5NDc5OTE@._V1_UY44_CR17,0,32,44_AL_.jpg"
-            alt="avatar" />
-          <img
-            src="https://m.media-amazon.com/images/M/MV5BMTEyMDA1MzE0NjdeQTJeQWpwZ15BbWU3MDM0NzA4MDQ@._V1_UY44_CR1,0,32,44_AL_.jpg"
-            alt="avatar" />
+        <!-- end poster-wrapper -->
+        <div class="movie__content">
+          <div class="movie__content--header">
+            <h2 class="text-red-900 text-3xl font-semibold  mt-3">{{movie.title}}</h2>
+
+            <p class="text-base font-medium text-gray-500">{{movie.genre}}</p>
+
+
+            <div class="sm:flex sm:justify-between sm:items-center">
+              <div class="extra  text-base ">
+                <div class="ratings">
+                  <p class="text-base font-semibold "> &#9733; <span class=" font-medium ">{{movie.rating}}</span> </p>
+                </div>
+                <p class="channels text-base  text-gray-500"> {{movie.duration}}</p>
+              </div>
+              <div class="mt-8 sm:mt-0 sm:ml-auto">
+
+                <label class="relative inline-flex items-center me-5 cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <div
+                    class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600">
+                  </div>
+                  <span class="ms-3 text-base   text-gray-500 dark:text-gray-300">toggle movie</span>
+                </label>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="movie__content--synopsis">
+            <h3 class="text-red-900 text-lg font-semibold mb-3">SYNOPSIS</h3>
+            <p class="text-justify text-base text-gray-600">
+              {{movie.description}}
+            </p>
+          </div>
+          <div class="gallery-section">
+            <h3 class="text-red-900 text-lg font-semibold mb-3">OFFICIAL TRAILER </h3>
+
+
+            <div class="w-[320px]">
+              <youtube-player [width]="withVideo" *ngIf="videoId" [videoId]="videoId"></youtube-player>
+            </div>
+
+
+          </div>
         </div>
-      </div>
-      <div class="synopsis-section">
-        <h3>SYNOPSIS</h3>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis
-          itaque sequi nemo neque, quibusdam, repellat libero deleniti vel
-          exercitationem obcaecati alias doloremque quisquam similique. Ad
-          libero doloremque temporibus alias unde tempore at voluptates
-          atque ratione minus vitae odio suscipit, ut quaerat omnis nulla
-          nemo illum praesentium ducimus tenetur quas non!
-        </p>
-      </div>
-      <div class="gallery-section">
-        <h3>VIDEO / PICTURE</h3>
-        <div class="gallery">
-          <div class="small"><img
-              src="https://m.media-amazon.com/images/M/MV5BYzkyNGViZDItYzFkMy00OGM0LTg3NzktZGVkZjM2Mzk1OGEzXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_.jpg"
-              alt="media" /></div>
-          <div class="medium"><img
-              src="https://m.media-amazon.com/images/M/MV5BNTkxOGIwYzUtNzc0ZS00MTBkLWFkODItYzEzNGRkN2E3MTAxXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_.jpg"
-              alt="media" /></div>
-          <div class="small"><img
-              src="https://m.media-amazon.com/images/M/MV5BMzg2OTY3MjE3OF5BMl5BanBnXkFtZTgwNTkxMDU0MDI@._V1_SX1777_CR0,0,1777,745_AL_.jpg"
-              alt="media" /></div>
-        </div>
-      </div>
-    </div>
+      </article>
+      <!-- end movie-card -->
+      <!-- </div> -->
+    </main>
   </div>
-  <!-- end movie-card -->
-  <!-- </div> -->
-</main>
+</div>

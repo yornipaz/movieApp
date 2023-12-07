@@ -44,6 +44,21 @@ export class MovieService {
       this.setWatchList(watchList);
     }
   }
+  getCategories(): Observable<string[]> {
+    let categories: string[] = []
+
+    this._movies.forEach(movie => {
+      movie.genre.split(',').forEach(category => {
+        if (!categories.includes(category)) {
+          categories.push(category)
+        }
+
+      })
+    })
+
+
+    return of(categories)
+  }
 
 
 

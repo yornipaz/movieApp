@@ -2,6 +2,172 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,300italic,400italic,600italic,700italic,800italic);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+$heading-font-family: 'Montserrat',
+sans-serif;
+$paragraph-font-family: 'Open Sans',
+sans-serif;
+
+$light: 300;
+$regular: 400;
+$semi-bold: 600;
+$bold: 700;
+$font-regular: 400;
+$mont-bold: 700;
+
+$text-movie-title:1.75rem;
+$text-summary:12px;
+$text-action-btn:14px;
+$text-movie-description:12px;
+
+
+$accent-color: #e7e7e7;
+$brand-color:#fe4141;
+$dark-color: #1e1b26;
+
+
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.truncate {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: $heading-font-family, sans-serif;
+}
+
+/* TYPOGRAPHY STARTS */
+
+/* Fonts */
+
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $heading-font-family;
+  color: $accent-color;
+  margin: 0px;
+}
+
+h2 {
+  font-size: $text-movie-title;
+  font-weight: $font-regular;
+  line-height: initial;
+}
+
+h3 {
+  font-size: $text-action-btn;
+  font-weight: $font-regular;
+  color: $brand-color;
+}
+
+h5 {
+  font-size: $text-summary;
+  font-weight: $font-regular;
+}
+
+.movie-gen {
+  margin: 0px;
+  padding: 0px;
+
+  li {
+    font-family: $paragraph-font-family;
+    font-size: $text-summary;
+    color: darken($accent-color, 40%);
+    width: auto;
+    display: block;
+    float: left;
+    margin-right: 6px;
+    font-weight: $semi-bold;
+  }
+}
+
+/** GRID STARTS **/
+
+
+
+
+.mr-grid:before,
+.mr-grid:after {
+  content: "";
+  display: table;
+}
+
+.mr-grid:after {
+  clear: both;
+}
+
+
+
+
+.col2 {
+  margin: 0% 0.5% 0.5% 0.5%;
+  padding: 1%;
+  float: left;
+  display: block;
+}
+
+.col1 {
+  margin: 0% 0.5% 0.5% 0.5%;
+  padding: 1%;
+  float: left;
+
+}
+
+/* Columns match, minus margin sum. E.G. margin-left+margin-right=1%, col2=50%-1% - added padding:1%*/
+
+.col1 {
+  width: 98%;
+}
+
+.col2 {
+  width: 47%;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  caret-color: $brand-color !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: lighten($color: $dark-color, $amount: 5%) !important;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after,
+.mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after,
+.mat-mdc-option.mat-mdc-option-active.mdc-list-item>.mdc-list-item__primary-text,
+.mat-form-field-underline,
+.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow,
+.mdc-switch.mdc-switch--selected:enabled>.mdc-switch__handle::after {
+  color: $brand-color !important;
+
+}
+
+.mdc-switch:enabled:hover:not(:focus):not(:active) .mdc-switch__track::after {
+  background: $brand-color !important;
+}
+
+.mdc-switch.mdc-switch--selected:enabled:hover:not(:focus):not(:active) .mdc-switch__handle::after,
+.mdc-switch .mdc-switch__handle::before,
+.mdc-switch.mdc-switch--selected:enabled:hover:not(:focus):not(:active) .mdc-switch__handle::after,
+.mdc-switch.mdc-switch--selected:enabled:hover:not(:focus) .mdc-switch__ripple::after {
+  background: $brand-color !important;
+}
