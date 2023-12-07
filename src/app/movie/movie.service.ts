@@ -44,6 +44,15 @@ export class MovieService {
       this.setWatchList(watchList);
     }
   }
+  removeFromWatchList(movieId: string): void {
+    let watchList: string[] = this.getWatchList()
+    const isMovieInWatchList = watchList.some(id => id === movieId);
+    if (isMovieInWatchList) {
+      watchList = watchList.filter(id => id !== movieId);
+      this.setWatchList(watchList);
+    }
+    return;
+  }
   getCategories(): Observable<string[]> {
     let categories: string[] = []
 
