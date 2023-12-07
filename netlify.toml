@@ -1,0 +1,7 @@
+[build]
+  publish = "dist/movie-app"
+  command = "ng build"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
